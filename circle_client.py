@@ -1,5 +1,4 @@
 from typing import Union, TypeVar, Type, List, Optional
-from typing import Union, TypeVar, Type, List, Optional
 from uuid import UUID
 
 import aiohttp
@@ -138,6 +137,14 @@ class CircleClient():
         }
         reply = await self._post("/reply", data=data)
         return _parse_response(Reply, reply)
+
+    async def allocate_tokens(self, user_id: UUID, count: int):
+        data = {
+            "user_id": str(user_id),
+            "count": count
+        }
+        user = await self._post("/allocate_tokens", data=data)
+        return _parse_response(User, user)
 
     async def _put(self, path, *, data=None):
         """Convenience wrapper that supplies a bearer token & returns JSON """

@@ -61,6 +61,14 @@ async def update():
     pprint.pprint(user)
 
 
+# Allocates tokens to a user
+# Must be done when their account is created, and every time they hit their quota thereafter
+async def allocate_tokens():
+    user = await client.search_users(display_name="ALICE IS SO PRETTY")[0]
+    allocated = await client.allocate_tokens(user.id, 100)
+    pprint.pprint(allocated)
+
+
 # Sends a message between one user and one shape
 # If you want to send a message to a group, you need a group user and a user for the sender of the message
 # sender_id is the sender's user id, and user_id is the group user's user id
@@ -105,9 +113,9 @@ async def test():
     await search_with_uuid()
     await create_user()
     await update()
+    await allocate_tokens()
     await send_message()
     await reset_message_history()
     await generate_reply()
-
 
 asyncio.get_event_loop().run_until_complete(test())
