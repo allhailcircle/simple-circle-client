@@ -15,6 +15,11 @@ async def search_users():
         display_name="Bob"
     )
     pprint.pprint(users)
+    users2 = await client.search_users(
+        contact_info_key="some_identifying_key",
+        contact_info_value="some_identifying_value"
+    )
+    pprint.pprint(users2)
 
 
 # You can search shapes by shape_name
